@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require ('cors');
 const morgan = require ('morgan');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDoc = require("../swagger.json");
+const errorHandlerRouter = require('./routes/errorhandler.route');
 const db = require('./utils/database');
 const initModels = require('./models/initModels');
 const authRoute = require('./routes/auth.routes')
@@ -8,9 +11,8 @@ const usersRoutes = require('./routes/users.routes');
 const productsRoutes = require('./routes/products.routes');
 const ordersRoutes = require ('./routes/orders.routes')
 const cartRoutes = require ('./routes/cart.routes');
+const productsInCart = require ('./routes/productsInCart.routes');
 const productsInOrder = require ('./models/productsInOrder.model');
-const ProductsInCart = require ('./models/productInCart.model');
-const errorHandlerRouter = require('./routes/errorhandler.route');
 
 
 initModels();
@@ -45,6 +47,8 @@ app.use(productsRoutes);
 app.use(authRoute);
 app.use(ordersRoutes);
 app.use(cartRoutes);
+app.use(productsInCart);
+app.use("/api/v1/docs",swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
 app.get('/', (req,res) =>{
     res.send('Welcome to my api')

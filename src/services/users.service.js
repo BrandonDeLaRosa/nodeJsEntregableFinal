@@ -1,5 +1,9 @@
 const Users = require('../models/users.model');
-const Orders = require('../models/order.model')
+const Orders = require('../models/order.model');
+const ProductsInCart = require('../models/productInCart.model');
+const Cart = require('../models/cart.model');
+const Products = require ('../models/products.model')
+
 
 class userServices {
 
@@ -28,6 +32,32 @@ class userServices {
         try {
             const userCreated = await Users.create(newUser);
             return userCreated
+        } catch (error) {
+            throw(error)
+        }
+    }
+
+    static async userProducts(id){
+        try {
+            const result = await Users.findByPk(id,{
+                attributes: {exclude: ["id","email","password"]},
+                include:[
+                    {
+                        model: Cart,attributes:{exclude: ["userId", "createdAt","updatedAt"]},
+                        include:[
+                            {
+                                model: ProductsInCart, attributes: {exclude:["cartId","productId","quantity","price","status","createdAt","updatedAt"]},
+                                include:[
+                                    {
+                                        model: Products
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+            return result
         } catch (error) {
             throw(error)
         }

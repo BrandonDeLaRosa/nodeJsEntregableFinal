@@ -1,0 +1,83 @@
+{
+
+    "openapi": "3.0.0",
+    "info": {
+        "title": "eCommerce Api",
+        "description": " Api para crear una tienda virtual",
+        "version": "1.0"
+    },
+
+    "paths": {
+        "/api/v1/ecomm/users": {
+            "post": {
+                "tags": [
+                    "Users"],
+                "description": "Con este endpoint podras crear un usuario",
+                "Summary": "Crea un nuevo usuario en el foro",
+                "requestBody": {
+                    "description": "Los campos a completar son: username, email, password ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                       "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    },
+
+    "components": {
+        "schemas": {
+            "login": {
+                "description": "La contraseña debe tener minimo 7 caracteres",
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "Brandon"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "brandon@academlo.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "12345678"
+                    }
+                }
+            }
+        }
+    }
+
+    
+
+}
