@@ -5,7 +5,10 @@ const getAllUsers = async (req,res,next) => {
         const users = await userServices.getAll()
         res.status(201).json(users)
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            name: error.name,
+            message: error.message
+        })
     }
 }
 
@@ -15,7 +18,10 @@ const createUser = async (req,res,next) => {
         const result = await userServices.createNewUser(newUser);
         res.status(201).json(result)
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            name: error.name,
+            message: error.message
+        })
     }
 }
 
@@ -26,7 +32,10 @@ const updateUser = async (req,res,next) => {
         await userServices.updateUserData(id,userInfo)
         res.status(204).send()
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            name: error.name,
+            message: error.message
+        })
     }
 }
 
@@ -36,7 +45,10 @@ const deleteUser = async  (req,res,next) => {
         await userServices.deleteOneUser(id)
         res.status(204).send()
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            name: error.name,
+            message: error.message
+        })
         
     }
 }

@@ -5,7 +5,11 @@ const getAllProducts = async (req,res,next) => {
         const products = await productServices.getAll();
         res.status(201).json(products);
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            status: 418,
+            message: error.message,
+            name: error.name
+        })
     }
 }
 
@@ -14,7 +18,11 @@ const getProducts = async (req,res,next) => {
         const products = await productServices.getAllAvailableProducts()
         res.status(201).json(products)
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            status: 418,
+            message: error.message,
+            name: error.name
+        })
     }
 }
 
@@ -24,7 +32,11 @@ const createProduct = async (req,res,next) => {
         const result = await productServices.createNewProduct(product)
         res.status(201).json(result)
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            status: 418,
+            message: error.message,
+            name: error.name
+        })
     }
 }
 
@@ -35,7 +47,11 @@ const updateProduct = async (req,res,next) => {
         await productServices.updatingProduct(id, productInfo)
         res.status(204).send();
     } catch (error) {
-        res.status(400).json(error)
+        next({
+            status: 418,
+            message: error.message,
+            name: error.name
+        })
     }
 }
 
@@ -45,7 +61,11 @@ const deleteProduct = async (req,res,next) => {
         await productServices.deleteThisProduct(id)
         res.status(204).send();
     } catch (error) {
-        
+        next({
+            status: 418,
+            message: error.message,
+            name: error.name
+        })
     }
 }
 

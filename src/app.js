@@ -10,6 +10,7 @@ const productsInOrder = require ('./models/productsInOrder.model');
 const ProductsInCart = require ('./models/productInCart.model');
 const order = require ('./models/order.model');
 const cart = require ('./models/cart.model');
+const errorHandlerRouter = require('./routes/errorhandler.route');
 
 
 initModels();
@@ -46,6 +47,8 @@ app.use(authRoute)
 app.get('/', (req,res) =>{
     res.send('Welcome to my api')
 });
+
+errorHandlerRouter(app);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto ${PORT}`);
