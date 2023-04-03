@@ -6,10 +6,10 @@ const initModels = require('./models/initModels');
 const authRoute = require('./routes/auth.routes')
 const usersRoutes = require('./routes/users.routes');
 const productsRoutes = require('./routes/products.routes');
+const ordersRoutes = require ('./routes/orders.routes')
+const cartRoutes = require ('./routes/cart.routes');
 const productsInOrder = require ('./models/productsInOrder.model');
 const ProductsInCart = require ('./models/productInCart.model');
-const order = require ('./models/order.model');
-const cart = require ('./models/cart.model');
 const errorHandlerRouter = require('./routes/errorhandler.route');
 
 
@@ -42,7 +42,9 @@ const PORT = 8000;
 
 app.use(usersRoutes);
 app.use(productsRoutes);
-app.use(authRoute)
+app.use(authRoute);
+app.use(ordersRoutes);
+app.use(cartRoutes);
 
 app.get('/', (req,res) =>{
     res.send('Welcome to my api')

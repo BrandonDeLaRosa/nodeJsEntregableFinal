@@ -5,7 +5,7 @@ const cart = db.define('cart', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoincrement: true,
+        autoIncrement: true,
         allowNull:false
     },
 
@@ -18,7 +18,8 @@ const cart = db.define('cart', {
     totalPrice: {
         type: DataTypes.INTEGER,
         allowNull:false,
-        field: "total_price"
+        field: "total_price",
+        defaultValue: 0.0
     }
 });
 

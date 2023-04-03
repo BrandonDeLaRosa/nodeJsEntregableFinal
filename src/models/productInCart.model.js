@@ -5,7 +5,7 @@ const ProductsInCart = db.define('productsInCart', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoincrement: true,
+        autoIncrement: true,
         allowNull:false
     },
 

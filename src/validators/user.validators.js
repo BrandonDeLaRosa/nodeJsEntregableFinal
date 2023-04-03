@@ -1,5 +1,5 @@
 const {check, param, validationResult} = require('express-validator'); 
-const validateResult = require('../src/utils/validate');
+const validateResult = require('../utils/validate');
 
 const createUserValidator = [
 

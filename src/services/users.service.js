@@ -1,4 +1,5 @@
 const Users = require('../models/users.model');
+const Orders = require('../models/order.model')
 
 class userServices {
 
@@ -32,6 +33,21 @@ class userServices {
         }
     }
 
+    static async userOrders(id){
+        try {
+            const result = await Users.findByPk(id,{
+                attributes: {exclude: ["id","email","password"]},
+                include:[
+                    {
+                        model: Orders, attributes:{exclude:["userId","createdAt","updatedAt"]}
+                    }
+                ]
+            });
+            return result
+        } catch (error) {
+            throw(error)
+        }
+    }
     static async updateUserData(id, userInfo){
         try {
             const updateUser = await Users.update(userInfo, {

@@ -12,6 +12,8 @@ const getAllUsers = async (req,res,next) => {
     }
 }
 
+
+
 const createUser = async (req,res,next) => {
     try {
         const newUser = req.body;
@@ -38,6 +40,18 @@ const updateUser = async (req,res,next) => {
         })
     }
 }
+const getUsersOrders = async (req,res,next) => {
+    try {
+        const { id } = req.params;
+       const userInfo = await userServices.userOrders(id)
+        res.status(201).json(userInfo)
+    } catch (error) {
+        next({
+            name: error.name,
+            message: error.message
+        })
+    }
+}
 
 const deleteUser = async  (req,res,next) => {
     try {
@@ -57,5 +71,6 @@ module.exports= {
     createUser,
     updateUser,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    getUsersOrders
 }
