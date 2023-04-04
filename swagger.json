@@ -1,19 +1,18 @@
 {
-
     "openapi": "3.0.0",
     "info": {
         "title": "eCommerce Api",
         "description": " Api para crear una tienda virtual",
         "version": "1.0"
     },
-
     "paths": {
         "/api/v1/ecomm/users": {
             "post": {
                 "tags": [
-                    "Users"],
+                    "Users"
+                ],
+                "summary": "Crea un nuevo usuario en el foro",
                 "description": "Con este endpoint podras crear un usuario",
-                "Summary": "Crea un nuevo usuario en el foro",
                 "requestBody": {
                     "description": "Los campos a completar son: username, email, password ",
                     "required": true,
@@ -27,13 +26,13 @@
                 },
                 "responses": {
                     "201": {
-                       "description": "Created"
+                        "description": "Created"
                     },
                     "409": {
                         "description": "Conflict",
                         "content": {
                             "application/json": {
-                                "schema":{
+                                "schema": {
                                     "type": "object",
                                     "properties": {
                                         "name": {
@@ -49,16 +48,329 @@
                             }
                         }
                     }
-                    
+                }
+            }
+        },
+        "/api/v1/ecomm/users/{id}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Actualiza el username y avatar de un usuario",
+                "description": "Para actualizar usuario, debes enviar, name y lastname en el body y como path param el id de usuario que se va actualizar",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "El id del usuario a actualizar"
+                    }
+                ],
+                "requestBody": {
+                    "description": "shalala shalala",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ecomm/users/cartProducts/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Accede a todos los productos en carrito del usuario.",
+                "description": "Endpoint paa acceder a todos los productos que un usuario a seleccionado.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "El id del usuario, al que correponde el carrito de compras."
+                    }
+                ],
+                "requestBody": {
+                    "description": "add the id number"
+                },
+                "responses": {
+                    "201": {
+                        "description": "user search successful"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ecomm/users/orders/1": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Accede a todas las ordenes de un usuario",
+                "description": "Endpoint para acceder a todas las ordenes de un usuario seleccionado",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id del usuario al que corresponde la orden"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "user search successful"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ecomm/products/available": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Accede a todos los productos cuyo stock no este en 0",
+                "description": "Acceder alos productos con disponibilidad.",
+                "responses": {
+                    "201": {
+                        "description": "Successful search"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ecomm/products": {
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Crear un nuevo producto.",
+                "description": "Endpoint para agregar un nuevo producto a la lista de productos disponibles",
+                "requestBody": {
+                    "description": "los campos a llenar son: name, description, price, availableQty, status, img, userId ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/addProduct"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ecomm/products/{id}": {
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Actualiza o corrige la descripcion de un producto",
+                "description": "Por medio de este endpoint modifica el la descripcion de un producto",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "El id del producto a actualizar"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Agrega en el campo descripcion, el texto correspondiente",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updateProduct"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ecomm/cartProducts": {
+            "post": {
+                "tags": [
+                    "ProductsInCart"
+                ],
+                "summary": "Agrega un producto al carrito de un usuario",
+                "description": "Con este endpoint puedes seleccionar el id de un producto ya creado, posteriormente agregarlo al carrito de un usuario.",
+                "requestBody": {
+                    "description": "Los campos a completar son: cartId, productId, quantity, price, status ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/addCartProducts"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Database connection error"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     },
-
+    
     "components": {
         "schemas": {
-            "login": {
-                "description": "La contraseña debe tener minimo 7 caracteres",
+            "login": {                  
                 "type": "object",
                 "properties": {
                     "username": {
@@ -74,10 +386,87 @@
                         "example": "12345678"
                     }
                 }
+            },
+            "updateUser": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "Brandon"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": "https://tse1.mm.bing.net/th?id=OIP.52T8HHBWh6b0dwrG6tSpVQHaFe&pid=Api&P=0"
+                    }
+                }
+            },
+            "addProduct": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Ipad Pro"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "14inches Ipad Pro, 128Gb, 14pxls front camera"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "example": 1000
+                    },
+                    "availableQty": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "img": {
+                        "type": "string",
+                        "example": "uern893g98g39pn8añenog30q94gg43q3490"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "updateProduct": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "example": "new Ipad pro, 256gb..."
+                    }
+                }
+            },
+            "addCartProducts":{        
+                "type": "object",
+                "properties": {
+                    "cartId": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "productId": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "quantity":{
+                        "type":"integer",
+                        "example":5
+                    },
+                    "price":{
+                        "type":"integer",
+                        "example":1000
+                    },
+                    "status":{
+                        "type":"boolean",
+                        "example":true
+                    }
+                }
             }
         }
     }
-
-    
-
-}
+}    

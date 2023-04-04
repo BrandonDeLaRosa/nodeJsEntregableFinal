@@ -1,5 +1,6 @@
 const Product = require('../models/products.model');
 const Users = require('../models/users.model');
+const {Op} = require('sequelize')
 
 class productServices {
 
@@ -39,8 +40,8 @@ static async getAllAvailableProducts(){
                     }
                 ],
                 where: {
-                    availableQty: 1
-                    // availableQty:  availableQty > 0 
+                    availableQty:{[Op.gt] : 0} 
+                   
                 }
             })
             return products
